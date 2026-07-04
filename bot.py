@@ -5,7 +5,8 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import FSInputFile
 
-API_TOKEN = "8819442399:AAFCAVAvJ7O4aUaeN6RNNzL2uiAIfbF03UA"
+API_TOKEN = os.getenv("BOT_TOKEN")
+print("TOKEN LOADED:", bool(API_TOKEN), API_TOKEN[:10] if API_TOKEN else None)
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
@@ -45,9 +46,9 @@ async def handle_video(message: types.Message):
         path = await asyncio.to_thread(download_video, message.text)
         await message.answer_video(video=FSInputFile(path))
         os.remove(path)
-        await msg.delete()
+        await message.delete()
     except Exception as e:
-        await msg.edit_text(f"❌ خطأ: {e}")
+        await message.answer(f"❌ خطأ: {e}")
 
 async def main():
     if not os.path.exists("downloads"):
