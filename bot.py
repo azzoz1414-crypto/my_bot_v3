@@ -14,6 +14,7 @@ dp = Dispatcher()
 def download_video(url):
     ydl_opts = {
         "format": "bestvideo+bestaudio/best",
+        "format_sort": ["res", "vcodec:h265", "br"],
         "prefer_ffmpeg": True,
         "merge_output_format": "mp4",
         "outtmpl": "downloads/%(id)s.%(ext)s",
