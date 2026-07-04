@@ -13,11 +13,16 @@ dp = Dispatcher()
 
 def download_video(url):
     ydl_opts = {
-        "format": "best[ext=mp4]/best",
+        "format": "bv*+ba/b",
+        "merge_output_format": "mp4",
         "outtmpl": "downloads/%(id)s.%(ext)s",
         "noplaylist": True,
         "quiet": False,
         "cookiefile": "cookies.txt",  
+        "postprocessors": [{
+            "key": "FFmpegVideoConvertor",
+            "preferedformat": "mp4",
+}],
         "http_headers": {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Referer": "https://www.tiktok.com/",
