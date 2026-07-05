@@ -50,7 +50,7 @@ async def handle_video(message: types.Message):
 
     try:
         path = await asyncio.to_thread(download_video, message.text)
-        await message.answer_document(FSInputFile(filename))
+        await message.answer_document(FSInputFile(path))
         os.remove(path)
         await message.delete()
     except Exception as e:
