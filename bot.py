@@ -13,8 +13,7 @@ dp = Dispatcher()
 
 def download_video(url):
     ydl_opts = {
-        "format": "best[acodec!=none][vcodec!=none]/h264_540p_*/best",
-        "format_sort": ["hasaud", "res", "br"],
+        "format": "h264_540p_*/best[acodec!=none][vcodec!=none]/best",
         "prefer_ffmpeg": True,
         "merge_output_format": "mp4",
         "outtmpl": "downloads/%(id)s.%(ext)s",
@@ -51,7 +50,7 @@ async def handle_video(message: types.Message):
 
     try:
         path = await asyncio.to_thread(download_video, message.text)
-        await message.answer_video(video=FSInputFile(path))
+        await message.answer_document(FSInputFile(filename))
         os.remove(path)
         await message.delete()
     except Exception as e:
